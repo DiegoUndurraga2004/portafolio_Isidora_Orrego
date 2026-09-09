@@ -63,7 +63,7 @@ export default function Home() {
     <header className="site-header">
       <a className="brand" href="#top" aria-label="Ir al inicio"><span>AD</span><span>Archivo de estilo</span></a>
       <div className="header-note">Direcciones visuales<br/>para un portafolio de moda</div>
-      <a className="index-link" href="#archivo">Índice <span>15</span></a>
+      <a className="index-link" href="#mis-portafolios">Mis portafolios <span>01</span></a>
     </header>
     <section className="intro" id="top">
       <p className="eyebrow">Colección de referencias / Vol. 01</p>
@@ -79,6 +79,13 @@ export default function Home() {
       </div>
       <div className="result-line"><span><Grid2X2 size={15}/> {visibleStyles.length.toString().padStart(2,'0')} direcciones</span><span>Selecciona una tarjeta para abrir su sistema</span></div>
       {visibleStyles.length ? <div className="style-grid">{visibleStyles.map((item) => <article className="style-card" key={item.id}><button onClick={() => setSelected(item)} aria-label={`Explorar ${item.name}`}><PortfolioPreview item={item}/><div className="card-copy"><div className="card-topline"><span>{item.index} / {item.family}</span><ArrowUpRight size={18}/></div><h2>{item.name}</h2><p>{item.mood}</p><div className="card-tags">{item.tags.slice(0,2).map((tag) => <span key={tag}>{tag}</span>)}</div></div></button></article>)}</div> : <div className="empty-state"><p>No encontramos esa combinación.</p><button onClick={() => { setQuery(''); setActiveFilter('Todos'); }}>Ver todas las direcciones</button></div>}
+    </section>
+    <section className="my-portfolios" id="mis-portafolios">
+      <div className="my-portfolios-heading"><span>02 / Portafolios construidos</span><h2>Mis <em>portafolios</em></h2><p>Identidades aplicadas a un portafolio real, con proyectos y recorrido completo.</p></div>
+      <a className="built-portfolio-card" href="/portafolios/mirar-distinto">
+        <div className="built-card-art"><span>ISIDORA ORREGO</span><strong>MIRAR<br/>DISTINTO,</strong><i>diseñar con intención</i><b>IO</b></div>
+        <div className="built-card-copy"><span>01 / Portafolio integral</span><h3>Mirar distinto</h3><p>Dirección de arte · Styling · Fotografía · Moda · Identidad visual · Experiencias</p><div>Entrar al portafolio <ArrowUpRight size={18}/></div></div>
+      </a>
     </section>
     <footer><span>Archivo de estilo</span><p>Una herramienta para elegir la futura identidad del portafolio.</p><span>Edición 2026</span></footer>
     <Sheet open={Boolean(selected)} onOpenChange={(open) => { if (!open) setSelected(null); }}>
