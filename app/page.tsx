@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Grid2X2, ListFilter, Search } from 'lucide-react';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
 
@@ -42,6 +42,13 @@ export default function Home() {
   const [activeFilter, setActiveFilter] = useState('Todos');
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState<StyleCard | null>(null);
+  const detailScrollRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    if (selected && detailScrollRef.current) {
+      detailScrollRef.current.scrollTop = 0;
+    }
+  }, [selected?.id]);
   const visibleStyles = useMemo(() => styles.filter((item) => {
     const needle = query.trim().toLowerCase();
     return (activeFilter === 'Todos' || item.family === activeFilter) && (!needle || [item.name,item.family,item.mood,...item.tags].join(' ').toLowerCase().includes(needle));
@@ -75,7 +82,7 @@ export default function Home() {
     </section>
     <footer><span>Archivo de estilo</span><p>Una herramienta para elegir la futura identidad del portafolio.</p><span>Edición 2026</span></footer>
     <Sheet open={Boolean(selected)} onOpenChange={(open) => { if (!open) setSelected(null); }}>
-      {selected && <SheetContent className="detail-sheet" showCloseButton><div className="detail-scroll">
+      {selected && <SheetContent className="detail-sheet" showCloseButton><div className="detail-scroll" ref={detailScrollRef}>
         <div className="detail-hero"><PortfolioPreview item={selected} detail/></div>
         <div className="detail-content">
           <div className="detail-kicker"><span>{selected.index}</span><span>{selected.family}</span><span>{selected.mood}</span></div>
