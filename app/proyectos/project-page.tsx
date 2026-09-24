@@ -1,22 +1,16 @@
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
-import { notFound } from 'next/navigation';
-import { getProject, getSuggestedProject, isidoraProjects } from '@/lib/isidora-portfolio';
+import { getProject, getSuggestedProject } from '@/lib/isidora-portfolio';
+import { BASE_PATH } from '@/lib/base-path';
 
-export function generateStaticParams() {
-  return isidoraProjects.map((project) => ({ slug: project.slug }));
-}
-
-export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const project = getProject(slug);
-  if (!project) notFound();
+export function ProjectPage({ slug }: { slug: string }) {
+  const project = getProject(slug)!;
   const suggested = getSuggestedProject(slug);
 
   return (
     <main className={`io-page project-page ${project.accent}`}>
       <header className="io-header project-header">
-        <a href="/portafolios/mirar-distinto#proyectos" className="io-back"><ArrowLeft size={17} /> Todos los proyectos</a>
-        <a href="/portafolios/mirar-distinto" className="io-wordmark">ISIDORA ORREGO</a>
+        <a href={`${BASE_PATH}/portafolios/mirar-distinto.html#proyectos`} className="io-back"><ArrowLeft size={17} /> Todos los proyectos</a>
+        <a href={`${BASE_PATH}/portafolios/mirar-distinto.html`} className="io-wordmark">ISIDORA ORREGO</a>
         <span>{project.number} / {project.area}</span>
       </header>
 
@@ -50,7 +44,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       <section className="suggested-project">
         <p>Proyecto sugerido</p>
-        <a className="suggested-link" href={`/proyectos/${suggested.slug}`}>
+        <a className="suggested-link" href={`${BASE_PATH}/proyectos/${suggested.slug}.html`}>
           <div className={`suggested-placeholder ${suggested.accent}`}><span>AÑADIR FOTO</span></div>
           <div className="suggested-copy">
             <span>{suggested.number} / {suggested.area}</span>

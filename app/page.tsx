@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-static';
+
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Grid2X2, ListFilter, Search } from 'lucide-react';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
@@ -29,10 +31,11 @@ const styles: StyleCard[] = [
 ];
 
 const filters = ['Todos','Editorial','Sistema','Experimental','Material','Narrativa'];
+const withBasePath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${path}`;
 
 function PortfolioPreview({ item, detail = false }: { item: StyleCard; detail?: boolean }) {
   return <div className={`portfolio-preview ${item.visual} ${detail ? 'is-detail' : ''}`}>
-    <img src={item.image} alt="" /><div className="preview-no">{item.index}</div>
+    <img src={withBasePath(item.image)} alt="" /><div className="preview-no">{item.index}</div>
     <div className={`preview-title ${item.typeStyle}`}>{item.name}</div><div className="preview-meta">PORTFOLIO / 2026</div>
     <div className="preview-rule" /><div className="preview-caption">Forma · Materia · Movimiento</div>
   </div>;
@@ -82,7 +85,7 @@ export default function Home() {
     </section>
     <section className="my-portfolios" id="mis-portafolios">
       <div className="my-portfolios-heading"><span>02 / Portafolios construidos</span><h2>Mis <em>portafolios</em></h2><p>Identidades aplicadas a un portafolio real, con proyectos y recorrido completo.</p></div>
-      <a className="built-portfolio-card" href="/portafolios/mirar-distinto">
+      <a className="built-portfolio-card" href={withBasePath('/portafolios/mirar-distinto.html')}>
         <div className="built-card-art"><span>ISIDORA ORREGO</span><strong>MIRAR<br/>DISTINTO,</strong><i>diseñar con intención</i><b>IO</b></div>
         <div className="built-card-copy"><span>01 / Portafolio integral</span><h3>Mirar distinto</h3><p>Dirección de arte · Styling · Fotografía · Moda · Identidad visual · Experiencias</p><div>Entrar al portafolio <ArrowUpRight size={18}/></div></div>
       </a>
@@ -97,7 +100,7 @@ export default function Home() {
           <section className="detail-section"><p className="section-label">01 / Tipografía</p><div className={`type-specimen ${selected.typeStyle}`}><span>Aa</span><p>{selected.fonts[0]}</p></div><div className="font-pair"><span>Secundaria</span><strong>{selected.fonts[1]}</strong><p>La forma sigue a la materia. El detalle revela la intención.</p></div></section>
           <section className="detail-section"><p className="section-label">02 / Paleta</p><div className="palette">{selected.colors.map((color,i) => <div className="swatch" key={color}><span style={{backgroundColor:color}}/><small>{selected.colorNames[i]}<br/>{color}</small></div>)}</div></section>
           <section className="detail-section"><p className="section-label">03 / Composición</p><div className="layout-diagram" aria-hidden="true">{Array.from({length:12}).map((_,i) => <i key={i}/>)}<b/><b/><b/></div><div className="spec-row"><span>Grilla</span><p>{selected.grid}</p></div><div className="spec-row"><span>Ritmo</span><p>{selected.rhythm}</p></div></section>
-          <section className="detail-section art-section"><p className="section-label">04 / Dirección de imagen</p><p>{selected.imagery}</p><div className="image-strip"><img src={selected.image} alt="Muestra de dirección fotográfica"/><img src={selected.image.includes('chrome') ? '/editorial/cobalt-atelier.png' : '/editorial/chrome-motion.png'} alt="Segunda muestra de dirección fotográfica"/></div></section>
+          <section className="detail-section art-section"><p className="section-label">04 / Dirección de imagen</p><p>{selected.imagery}</p><div className="image-strip"><img src={withBasePath(selected.image)} alt="Muestra de dirección fotográfica"/><img src={withBasePath(selected.image.includes('chrome') ? '/editorial/cobalt-atelier.png' : '/editorial/chrome-motion.png')} alt="Segunda muestra de dirección fotográfica"/></div></section>
           <section className="detail-section"><p className="section-label">05 / En contexto</p><div className="spec-row"><span>Movimiento</span><p>{selected.motion}</p></div><div className="spec-row"><span>Ideal para</span><p>{selected.ideal}</p></div><div className="why-box"><span>Por qué funciona</span><p>La dirección mantiene una regla visual reconocible y deja flexibilidad para que cada proyecto conserve su identidad.</p></div></section>
           <div className="detail-nav"><button onClick={() => moveSelection(-1)}><ArrowLeft size={18}/> Anterior</button><span>{selected.index} / 15</span><button onClick={() => moveSelection(1)}>Siguiente <ArrowRight size={18}/></button></div>
         </div></div></SheetContent>}

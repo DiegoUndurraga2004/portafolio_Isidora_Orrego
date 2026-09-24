@@ -1,11 +1,14 @@
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { isidoraProjects } from '@/lib/isidora-portfolio';
+import { BASE_PATH } from '@/lib/base-path';
+
+export const dynamic = 'force-static';
 
 export default function MirarDistintoPortfolio() {
   return (
     <main className="io-page">
       <header className="io-header">
-        <a href="/#mis-portafolios" className="io-back"><ArrowLeft size={17} /> Volver al archivo</a>
+        <a href={`${BASE_PATH}/#mis-portafolios`} className="io-back"><ArrowLeft size={17} /> Volver al archivo</a>
         <span className="io-wordmark">ISIDORA ORREGO</span>
         <span>PORTAFOLIO / 2025—2026</span>
       </header>
@@ -35,7 +38,7 @@ export default function MirarDistintoPortfolio() {
         </div>
         <div className="io-project-grid">
           {isidoraProjects.map((project) => (
-            <a className={`io-project-card ${project.accent}`} href={`/proyectos/${project.slug}`} key={project.slug}>
+            <a className={`io-project-card ${project.accent}`} href={`${BASE_PATH}/proyectos/${project.slug}.html`} key={project.slug}>
               <div className="io-photo-placeholder"><span>AÑADIR FOTO</span></div>
               <div className="io-project-card-copy">
                 <div><span>{project.number}</span><span>{project.area}</span></div>
