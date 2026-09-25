@@ -2,9 +2,9 @@ import type { NextConfig } from 'next';
 
 const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 const repositoryName =
-  process.env.GITHUB_REPOSITORY?.split('/')[1] ?? 'portafolio_Isidora_Orrego';
+  process.env.GITHUB_REPOSITORY?.split('/')[1] ?? 'portafolio';
 const repositoryOwner =
-  process.env.GITHUB_REPOSITORY?.split('/')[0] ?? 'DiegoUndurraga2004';
+  process.env.GITHUB_REPOSITORY?.split('/')[0] ?? 'isiorregov';
 const isUserOrOrganizationPage = repositoryName.toLowerCase().endsWith('.github.io');
 const basePath = isGitHubPages && !isUserOrOrganizationPage ? `/${repositoryName}` : '';
 const siteUrl =
