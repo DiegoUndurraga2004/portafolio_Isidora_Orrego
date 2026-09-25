@@ -77,12 +77,12 @@
   z-index: 2;
   width: clamp(5.75rem, 22%, 9rem);
   height: auto;
-  top: -0.3em;
+  top: -0.08em;
   right: 0;
   pointer-events: none;
   transform: scaleX(-1) rotate(-7deg);
   transform-origin: center;
-  animation: pinSettle 7s ease-in-out infinite alternate;
+  animation: none;
 }
 
 .aboutQuote {
@@ -321,7 +321,7 @@
 
   .aboutPin {
     width: clamp(5rem, 29%, 7.5rem);
-    top: -0.2em;
+    top: -0.05em;
     right: 0;
   }
 
