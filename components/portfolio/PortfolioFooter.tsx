@@ -6,7 +6,10 @@ export function PortfolioFooter() {
     <footer className={styles.footer}>
       <div className={styles.footerIdentity}>
         <strong>ISIDORA ORREGO</strong>
-        <span>MIRAR DISTINTO</span>
+        <span className={styles.footerLockup} aria-label="Mirar distinto">
+          <span className={styles.footerMirar}>MIRAR</span>
+          <span className={styles.footerDistinto}>DISTINTO</span>
+        </span>
       </div>
 
       <div className={styles.footerLinks}>

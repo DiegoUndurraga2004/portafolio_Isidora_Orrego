@@ -137,7 +137,9 @@
 }
 
 .footerIdentity strong,
-.footerIdentity span {
+.footerLockup,
+.footerMirar,
+.footerDistinto {
   display: block;
 }
 
@@ -147,13 +149,27 @@
   letter-spacing: -0.02em;
 }
 
-.footerIdentity span {
+.footerLockup {
+  width: fit-content;
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 0.72;
+  text-transform: uppercase;
+}
+
+.footerMirar {
+  color: var(--chrome-bg);
+  font-family: var(--font-dm-sans), Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.085em;
+}
+
+.footerDistinto {
+  margin-left: 0.32em;
   color: var(--chrome-blue);
   font-family: var(--font-instrument-serif), Georgia, serif;
-  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  font-size: 0.91em;
   font-weight: 400;
-  line-height: 0.85;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.055em;
 }
 
 .footerLinks {

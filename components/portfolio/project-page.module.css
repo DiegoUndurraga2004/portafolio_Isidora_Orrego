@@ -1,6 +1,7 @@
 .projectShell {
   --project-accent: #888b91;
   min-height: 100vh;
+  overflow-x: hidden;
   background: var(--paper);
   color: var(--ink);
 }
@@ -54,11 +55,23 @@
 .metadata {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1rem;
+  gap: clamp(1rem, 2vw, 2.5rem);
   margin: clamp(4rem, 8vw, 8rem) 0 0;
   padding-top: 1rem;
   border-top: 1px solid var(--ink);
+}
+
+.metadataFour {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.metadataFive {
+  grid-template-columns:
+    minmax(0, 0.8fr)
+    minmax(0, 1fr)
+    minmax(0, 0.85fr)
+    minmax(0, 1.5fr)
+    minmax(0, 1.3fr);
 }
 
 .metadata div {
@@ -89,6 +102,22 @@
   margin-top: 0.25rem;
   color: var(--muted);
   font-size: 0.72rem;
+}
+
+.metaLine {
+  display: block;
+}
+
+.metaLine + .metaLine {
+  margin-top: 0.22rem;
+}
+
+.statementAccent {
+  color: var(--blue);
+}
+
+.imageFrame {
+  width: 100%;
 }
 
 .heroImage {
@@ -299,6 +328,91 @@
   border: 1px solid var(--project-accent);
 }
 
+.moodboardLayout {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: center;
+}
+
+.moodboardLayout figure:first-child {
+  grid-column: 1 / span 7;
+}
+
+.moodboardLayout .imageFrame {
+  background: var(--paper);
+}
+
+.moodboardLayout img {
+  mix-blend-mode: multiply;
+}
+
+.moodboardLabel {
+  grid-column: 9 / -1;
+  justify-self: center;
+  margin: 0;
+  color: var(--blue);
+  font-size: clamp(0.85rem, 1vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.narrative_vinculo .layout_sequence {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+}
+
+.narrative_vinculo .layout_sequence .imageFrame {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--paper-deep);
+}
+
+.narrative_vinculo .layout_sequence img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.narrative_vinculo .layout_sequence figure:nth-child(3) img {
+  object-position: 55% center;
+}
+
+.narrative_vinculo .layout_pair {
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 0.75fr);
+  align-items: center;
+}
+
+.narrative_vinculo .layout_pair figure:nth-child(2) {
+  width: 88%;
+  justify-self: center;
+}
+
+.narrative_vinculo .layout_pair figure:nth-child(2) .imageFrame {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--paper-deep);
+}
+
+.narrative_vinculo .layout_pair figure:nth-child(2) img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.narrative_proximo_movimiento .layout_technical {
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 0.8fr);
+  align-items: center;
+  background: none;
+}
+
+.narrative_proximo_movimiento .layout_technical figure:nth-child(2) {
+  width: 82%;
+  justify-self: center;
+}
+
 .narrativeList {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -338,7 +452,20 @@
 .videoFigure video {
   width: 100%;
   max-height: 88svh;
+  object-fit: contain;
   background: var(--ink);
+}
+
+.video_cautela_intima video {
+  background: #d8d9dd;
+}
+
+.video_entre_corteza video {
+  background: #b7b8ba;
+}
+
+.video_proximo_movimiento video {
+  background: #afa795;
 }
 
 .credits {
@@ -446,7 +573,8 @@
   }
 
   .projectIntro h1 {
-    font-size: clamp(4rem, 21vw, 7.5rem);
+    max-width: 100%;
+    font-size: clamp(3.3rem, 17.5vw, 7.5rem);
     line-height: 0.75;
   }
 
@@ -455,7 +583,8 @@
     margin-top: 2rem;
   }
 
-  .metadata {
+  .metadataFour,
+  .metadataFive {
     grid-template-columns: 1fr 1fr;
     margin-top: 4rem;
   }
@@ -549,6 +678,37 @@
     scroll-snap-align: start;
   }
 
+  .moodboardLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .moodboardLayout figure:first-child,
+  .moodboardLabel {
+    grid-column: auto;
+  }
+
+  .moodboardLabel {
+    padding-top: 2rem;
+  }
+
+  .narrative_vinculo .layout_sequence {
+    display: flex;
+    overflow-x: auto;
+    grid-template-columns: none;
+    align-items: stretch;
+    scroll-snap-type: x mandatory;
+  }
+
+  .narrative_vinculo .layout_pair,
+  .narrative_proximo_movimiento .layout_technical {
+    grid-template-columns: 1fr;
+  }
+
+  .narrative_vinculo .layout_pair figure:nth-child(2),
+  .narrative_proximo_movimiento .layout_technical figure:nth-child(2) {
+    width: 100%;
+  }
+
   .credits,
   .followUp {
     padding-left: 1rem;
@@ -572,6 +732,17 @@
   .followUpGrid a:first-child > div,
   .followUpGrid a:last-child > div {
     aspect-ratio: 4 / 5;
+  }
+}
+
+@media (max-width: 520px) {
+  .metadataFour,
+  .metadataFive {
+    grid-template-columns: 1fr;
+  }
+
+  .metadata div:last-child {
+    grid-column: auto;
   }
 }
 

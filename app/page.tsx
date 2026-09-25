@@ -13,15 +13,17 @@ export default function HomePage() {
         <section className="home-hero" aria-labelledby="home-title">
           <p className="hero-name">ISIDORA ORREGO</p>
           <h1 id="home-title">
-            <span>MIRAR</span>
+            <span className="hero-mirar">
+              MIRAR
+              <img
+                className="hero-pin"
+                src={`${BASE_PATH}/portfolio/identity/isidora-alfiler-azul.png`}
+                alt=""
+                aria-hidden="true"
+              />
+            </span>
             <em>DISTINTO</em>
           </h1>
-          <img
-            className="hero-pin"
-            src={`${BASE_PATH}/portfolio/identity/isidora-alfiler-azul.png`}
-            alt=""
-            aria-hidden="true"
-          />
           <p className="hero-claim">diseñar con intención</p>
           <span className="hero-index" aria-hidden="true">IO / 2026</span>
         </section>
@@ -34,7 +36,6 @@ export default function HomePage() {
             cuidadas, dejando siempre espacio para una decisión inesperada que les dé
             carácter.
           </p>
-          <p className="intro-interruption">Una base clara.<br />Un gesto que da carácter.</p>
         </section>
 
         <section className="home-projects" id="proyectos" aria-labelledby="projects-title">

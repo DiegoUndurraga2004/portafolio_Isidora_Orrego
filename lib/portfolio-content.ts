@@ -93,6 +93,7 @@ export type PortfolioProject = {
     course: string;
     period: string;
     type: string;
+    members?: string[];
     role?: string[];
     tools: string[];
   };
@@ -322,7 +323,7 @@ export const portfolioProjects: PortfolioProject[] = [
     metadata: {
       year: '2026',
       course: 'Taller de Moda y Gestión V — Alta Costura',
-      period: 'marzo a julio 2026',
+      period: 'marzo a julio',
       type: 'Individual',
       tools: [
         'patronaje manual',
@@ -400,7 +401,7 @@ export const portfolioProjects: PortfolioProject[] = [
       masterFileName: 'cautela_fashion-film-original.mov',
       webFileName: 'cautela_fashion-film-web.mp4',
       poster: '/portfolio/projects/cautela-intima/cautela_01_hero.webp',
-      credit: 'Realización audiovisual — Isidora Orrego',
+      credit: 'Fashionfilm',
       controls: true,
       playsInline: true,
       preload: 'metadata',
@@ -457,7 +458,7 @@ export const portfolioProjects: PortfolioProject[] = [
     metadata: {
       year: '2025',
       course: 'Complementos de Moda',
-      period: 'agosto a diciembre 2025',
+      period: 'agosto a diciembre',
       type: 'Individual',
       tools: [
         'patronaje',
@@ -592,7 +593,7 @@ export const portfolioProjects: PortfolioProject[] = [
     metadata: {
       year: '2025',
       course: 'Taller de Moda y Gestión III',
-      period: 'marzo a junio 2025',
+      period: 'marzo a junio',
       type: 'Grupal',
       role: [
         'diseño de uno de los looks',
@@ -761,8 +762,9 @@ export const portfolioProjects: PortfolioProject[] = [
     metadata: {
       year: '2025',
       course: 'Taller de Moda IV',
-      period: 'agosto a diciembre 2025',
+      period: 'agosto a diciembre',
       type: 'Grupal — 3 integrantes',
+      members: ['Trinidad Mckay', 'Dominga González', 'Isidora Orrego'],
       role: [
         'co-diseño del bolso',
         'definición de qué partes de los uniformes se utilizarían en cada componente',
@@ -870,7 +872,7 @@ export const portfolioProjects: PortfolioProject[] = [
       masterFileName: 'vitatex_working-process-original.mov',
       webFileName: 'vitatex_working-process-web.mp4',
       poster: '/portfolio/projects/proximo-movimiento/vitatex_01_hero.webp',
-      credit: 'Registro audiovisual, edición y selección musical — Isidora Orrego',
+      credit: 'Video de proceso',
       controls: true,
       playsInline: true,
       preload: 'metadata',
@@ -884,7 +886,7 @@ export const portfolioProjects: PortfolioProject[] = [
       {
         kind: 'images',
         stage: 'decisions',
-        imageIds: ['vitatex-ficha', 'vitatex-bolsillos'],
+        imageIds: ['vitatex-bolsillos', 'vitatex-ficha'],
         layout: 'technical',
       },
       {

@@ -82,16 +82,19 @@ export default function AboutPage() {
             <div className={styles.aboutIntro}>
               <p className={styles.aboutIndex}>Sobre mí</p>
               <h1 className={styles.aboutHeading} id="about-title">
-                Mirar distinto
+                <span className={styles.aboutMirar}>
+                  Mirar
+                  <img
+                    className={styles.aboutPin}
+                    src={`${BASE_PATH}/portfolio/identity/isidora-alfiler-azul.png`}
+                    alt=""
+                    aria-hidden="true"
+                    width="824"
+                    height="478"
+                  />
+                </span>
+                <span>distinto</span>
               </h1>
-              <img
-                className={styles.aboutPin}
-                src={`${BASE_PATH}/portfolio/identity/isidora-alfiler-azul.png`}
-                alt=""
-                aria-hidden="true"
-                width="824"
-                height="478"
-              />
               <blockquote className={styles.aboutQuote}>
                 “Primero ordeno. Después veo dónde romperlo.”
               </blockquote>

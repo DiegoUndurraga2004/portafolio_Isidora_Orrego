@@ -17,6 +17,51 @@ const projectAccents: Record<PortfolioProject['slug'], string> = {
   'proximo-movimiento': '#baf000',
 };
 
+const statementHighlights: Record<PortfolioProject['slug'], string> = {
+  'cautela-intima': 'conexión',
+  vinculo: 'transforma',
+  'entre-corteza': 'fuerza',
+  'proximo-movimiento': 'función',
+};
+
+const metadataToolLines: Record<PortfolioProject['slug'], string[]> = {
+  'cautela-intima': [
+    'patronaje manual · confección · diseño a medida',
+    'experimentación material · plisado',
+    'manipulación de gasa · trabajo con alambre',
+    'construcción estructural',
+  ],
+  vinculo: [
+    'patronaje · corte de cuero · costura manual',
+    'costura a máquina · punzón · tenedores',
+    'agujas de punta redonda · biselador · bruñidor',
+    'sacabocados · martillo de goma · hilo encerado',
+    'Agorex · sellado y bruñido de bordes',
+  ],
+  'entre-corteza': [
+    'Adobe Illustrator para representación 3D',
+    'patronaje manual · confección',
+  ],
+  'proximo-movimiento': ['Adobe Illustrator'],
+};
+
+const metadataRoleLines: Partial<Record<PortfolioProject['slug'], string[]>> = {
+  'entre-corteza': [
+    'diseño de uno de los looks · patronaje',
+    'confección completa · representación 3D',
+    'participación en conceptualización grupal',
+    'gestión colaboración LUAU Shoes',
+  ],
+  'proximo-movimiento': [
+    'co-diseño del bolso · definición del aprovechamiento de uniformes',
+    'búsqueda de referentes · fichas técnicas completas',
+    'registro audiovisual durante todo el proceso',
+    'edición completa del working process · selección musical',
+    'dirección fotográfica · elección de locación',
+    'realización de fotografías finales',
+  ],
+};
+
 const imageRoleLabels: Record<ProjectImage['role'], string> = {
   hero: 'Imagen principal',
   result: 'Resultado',
@@ -34,20 +79,47 @@ function PortfolioImage({ image, project, priority = false }: {
 }) {
   return (
     <figure className={styles.imageFigure}>
-      <img
-        src={assetUrl(image.src)}
-        alt={image.alt ?? `${imageRoleLabels[image.role]} del proyecto ${project.title}`}
-        loading={priority ? 'eager' : 'lazy'}
-        fetchPriority={priority ? 'high' : 'auto'}
-      />
+      <div className={styles.imageFrame}>
+        <img
+          src={assetUrl(image.src)}
+          alt={image.alt ?? `${imageRoleLabels[image.role]} del proyecto ${project.title}`}
+          loading={priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : 'auto'}
+        />
+      </div>
       {image.caption ? <figcaption>{image.caption}</figcaption> : null}
     </figure>
   );
 }
 
+function HighlightedStatement({ project, text }: { project: PortfolioProject; text: string }) {
+  const highlightedWord = statementHighlights[project.slug];
+  const parts = text.split(new RegExp(`(${highlightedWord})`, 'i'));
+
+  return (
+    <>
+      {parts.map((part, index) =>
+        part.toLocaleLowerCase('es') === highlightedWord ? (
+          <span className={styles.statementAccent} key={`${part}-${index}`}>{part}</span>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  );
+}
+
+function MetadataLines({ lines }: { lines: string[] }) {
+  return <>{lines.map((line) => <span className={styles.metaLine} key={line}>{line}</span>)}</>;
+}
+
 function Narrative({ module, project }: { module: NarrativeModule; project: PortfolioProject }) {
   if (module.kind === 'quote') {
-    return <blockquote className={styles.narrativeQuote}>{module.text}</blockquote>;
+    return (
+      <blockquote className={styles.narrativeQuote}>
+        <HighlightedStatement project={project} text={module.text} />
+      </blockquote>
+    );
   }
 
   if (module.kind === 'list') {
@@ -61,7 +133,7 @@ function Narrative({ module, project }: { module: NarrativeModule; project: Port
 
   if (module.kind === 'video' && project.video) {
     return (
-      <figure className={styles.videoFigure}>
+      <figure className={`${styles.videoFigure} ${styles[`video_${project.slug.replaceAll('-', '_')}`]}`}>
         <video
           controls
           playsInline
@@ -80,10 +152,15 @@ function Narrative({ module, project }: { module: NarrativeModule; project: Port
     const images = module.imageIds
       .map((imageId) => project.images.find((image) => image.id === imageId))
       .filter((image): image is ProjectImage => Boolean(image));
+    const isCautelaMoodboard =
+      project.slug === 'cautela-intima' && module.imageIds.includes('cautela-moodboard');
 
     return (
-      <div className={`${styles.narrativeImages} ${styles[`layout_${module.layout}`]}`}>
+      <div className={`${styles.narrativeImages} ${styles[`layout_${module.layout}`]} ${isCautelaMoodboard ? styles.moodboardLayout : ''}`}>
         {images.map((image) => <PortfolioImage image={image} project={project} key={image.id} />)}
+        {isCautelaMoodboard ? (
+          <p className={styles.moodboardLabel}>MOODBOARD CONCEPTUAL</p>
+        ) : null}
       </div>
     );
   }
@@ -115,9 +192,9 @@ export function ProjectPage({ project }: { project: PortfolioProject }) {
           <p className={styles.projectNumber}>PROYECTO {project.number}</p>
           <h1>{project.title}</h1>
           {project.subtitle ? <p className={styles.projectSubtitle}>{project.subtitle}</p> : null}
-          <blockquote>{project.statement}</blockquote>
+          <blockquote><HighlightedStatement project={project} text={project.statement} /></blockquote>
 
-          <dl className={styles.metadata}>
+          <dl className={`${styles.metadata} ${project.metadata.role ? styles.metadataFive : styles.metadataFour}`}>
             <div>
               <dt>Año / período</dt>
               <dd>
@@ -126,11 +203,27 @@ export function ProjectPage({ project }: { project: PortfolioProject }) {
               </dd>
             </div>
             <div><dt>Curso</dt><dd>{project.metadata.course}</dd></div>
-            <div><dt>Tipo</dt><dd>{project.metadata.type}</dd></div>
+            <div>
+              <dt>Tipo</dt>
+              <dd>
+                {project.metadata.type}
+                {project.metadata.members ? (
+                  <span className={styles.metaSecondary}>
+                    <MetadataLines lines={project.metadata.members} />
+                  </span>
+                ) : null}
+              </dd>
+            </div>
             {project.metadata.role ? (
-              <div><dt>Rol</dt><dd>{project.metadata.role.join(' · ')}</dd></div>
+              <div>
+                <dt>Rol</dt>
+                <dd><MetadataLines lines={metadataRoleLines[project.slug] ?? [project.metadata.role.join(' · ')]} /></dd>
+              </div>
             ) : null}
-            <div><dt>Herramientas</dt><dd>{project.metadata.tools.join(' · ')}</dd></div>
+            <div>
+              <dt>Herramientas</dt>
+              <dd><MetadataLines lines={metadataToolLines[project.slug]} /></dd>
+            </div>
           </dl>
         </header>
 
